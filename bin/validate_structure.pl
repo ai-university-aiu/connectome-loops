@@ -1,4 +1,4 @@
-/*  Connectome slice — the Causalontology 2.0.0 structure validator.
+/*  connectome-loops (Wave 3b, the loops arm) — the Causalontology 2.0.0 structure validator, reused verbatim from the Wave 2 slice.
 
     Loads the slice's minted structure records (causal_map) and validates every
     one against PrologAI's UNMODIFIED Causalontology 2.0.0 conformance engine:
