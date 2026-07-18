@@ -1,4 +1,4 @@
-/*  Connectome slice — the neural Lattice substrate (Layer 0).
+/*  connectome-loops (Wave 3b, the loops arm) — the neural Lattice substrate (Layer 0), reused verbatim from the Wave 2 slice.
 
     This pack is the slice's realisation of the CLOSURE RULE: STIGMERGY FOR
     STATE plus NOTIFICATION FOR REACTIVITY. Regions coordinate only through a

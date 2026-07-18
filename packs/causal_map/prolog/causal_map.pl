@@ -1,4 +1,4 @@
-/*  Connectome slice — causal_map (Layer 1): the Causalontology 2.0.0 grounding.
+/*  connectome-loops (Wave 3b, the loops arm) — causal_map (Layer 1): the Causalontology 2.0.0 grounding, reused verbatim from the Wave 2 slice.
 
     The GROUNDING RULE: ground the STRUCTURE in Causalontology 2.0.0, keep the
     DYNAMICS native. This pack is the structure. It MINTS the content-addressed
