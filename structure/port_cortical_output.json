@@ -1,0 +1,8 @@
+{
+  "accepts": ["occurrent:b1f0e94a5c42ad92173966dccab16114debbd11a2cb0adedaa7905f7650c88a1" ],
+  "bearer":"continuant:255cf50651cfb394335eb58801580b5982837d0c2253c83f9edb30de1a1cded2",
+  "direction":"out",
+  "id":"port:1ac1caf530a9bee8de37646349c876eea1ac91ba4c51fa1c58d5e08405e80176",
+  "label":"cortical_output",
+  "type":"port"
+}

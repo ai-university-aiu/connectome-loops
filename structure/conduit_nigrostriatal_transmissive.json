@@ -1,0 +1,8 @@
+{
+  "carries": ["occurrent:6526ec3fd9bc243d634168b1e6763427cd076548212f79b8a71d36fb140b3057" ],
+  "from":"port:d6e4f25697004340b0e308bf8356cfabfb12fa49e142639ed3748c67e865fad6",
+  "id":"conduit:a3cf525a3bda91be8aa1f502c72705403906d2c96d0a7f1b190b405a1a9e9c15",
+  "label":"nigrostriatal_projection",
+  "to":"port:4718ce11eac713b1478e7d425738150533288c3c4d6dda9a897f4b060f8b306c",
+  "type":"conduit"
+}

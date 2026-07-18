@@ -1,0 +1,8 @@
+{
+  "causes": ["occurrent:b1f0e94a5c42ad92173966dccab16114debbd11a2cb0adedaa7905f7650c88a1" ],
+  "effects": ["occurrent:66006791a3136cadb0c969786e39518b60a72f912f65c550fa02e6a21882d76c" ],
+  "id":"causal_relation_object:c5691057a2cde5aa02d331588a3f9336de33013c45c7c188d7abce0df2814d86",
+  "modality":"sufficient",
+  "temporal": {"maximum_delay":1, "minimum_delay":0, "unit":"seconds"},
+  "type":"causal_relation_object"
+}

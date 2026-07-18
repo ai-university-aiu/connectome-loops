@@ -1,0 +1,9 @@
+{
+  "accepts": ["occurrent:b1f0e94a5c42ad92173966dccab16114debbd11a2cb0adedaa7905f7650c88a1" ],
+  "bearer":"continuant:c771d8ea7fe65fb2c97ae8e26022c3effe1341550b95d3d4285017a383803402",
+  "direction":"in",
+  "id":"port:d7ba82f79db79ff6036bd7426f46474f7773b8e56524f7fd15d22cd5eb71dae8",
+  "label":"corticostriatal_input",
+  "realizable":"realizable:7bf6b69be5cffb4cac4aeea20036afd3eff0a1434b8c995fd1b4840ab0706987",
+  "type":"port"
+}

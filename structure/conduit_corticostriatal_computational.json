@@ -1,0 +1,9 @@
+{
+  "carries": ["occurrent:b1f0e94a5c42ad92173966dccab16114debbd11a2cb0adedaa7905f7650c88a1" ],
+  "from":"port:1ac1caf530a9bee8de37646349c876eea1ac91ba4c51fa1c58d5e08405e80176",
+  "id":"conduit:180bcc1135256809f1df3f65b45ca94c4b678445591227d777225fc4615ad032",
+  "label":"corticostriatal_projection",
+  "to":"port:d7ba82f79db79ff6036bd7426f46474f7773b8e56524f7fd15d22cd5eb71dae8",
+  "transform":"causal_relation_object:c5691057a2cde5aa02d331588a3f9336de33013c45c7c188d7abce0df2814d86",
+  "type":"conduit"
+}

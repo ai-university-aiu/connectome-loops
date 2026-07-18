@@ -1,0 +1,10 @@
+{
+  "coarse":"occurrent:f5414964d141c4815d5821aa1161dc7c63c0e62a2dee2a0be2a44bb19668119e",
+  "fine": [
+    "occurrent:91ffbfe0055951a4a26d54dbfe91111438d11369d315b69cf97074cefa0bc9f1",
+    "occurrent:6526ec3fd9bc243d634168b1e6763427cd076548212f79b8a71d36fb140b3057"
+  ],
+  "id":"bridge:45625712753bb58ffc305646ad6d4d4c851461f6cd873a93684eac22cef5c046",
+  "relation":"realizes",
+  "type":"bridge"
+}

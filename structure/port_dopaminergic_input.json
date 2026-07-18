@@ -1,0 +1,8 @@
+{
+  "accepts": ["occurrent:6526ec3fd9bc243d634168b1e6763427cd076548212f79b8a71d36fb140b3057" ],
+  "bearer":"continuant:c771d8ea7fe65fb2c97ae8e26022c3effe1341550b95d3d4285017a383803402",
+  "direction":"in",
+  "id":"port:4718ce11eac713b1478e7d425738150533288c3c4d6dda9a897f4b060f8b306c",
+  "label":"dopaminergic_input",
+  "type":"port"
+}

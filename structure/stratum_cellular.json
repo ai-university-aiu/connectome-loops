@@ -1,0 +1,9 @@
+{
+  "governs": ["cell_biology" ],
+  "id":"stratum:5109aa4fe49989e6f325ab90042cfc62c3ae30f7d028a6e4e5d6e2d2f56469b6",
+  "label":"cellular",
+  "ordinal":6,
+  "scheme":"neuroendocrine",
+  "type":"stratum",
+  "unit":"cell"
+}

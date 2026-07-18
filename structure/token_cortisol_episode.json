@@ -1,0 +1,7 @@
+{
+  "id":"token_occurrence:b2b1abcea45b461213a8bb8dbb49afeed6575da8bf29272ff6d3f970ea8b82c9",
+  "instantiates":"occurrent:1a245c490ddb060b89750d8d8ba2379fdde5cbeb8423a205d5c900291804164c",
+  "interval": {"end":"2026-07-17T01:00:00Z", "start":"2026-07-17T00:00:00Z"},
+  "observer":"ed25519:48895ec81c687a6a9f0d755f3e172b1c8a22d777f88c2b8ce34afb077a0950f7",
+  "type":"token_occurrence"
+}

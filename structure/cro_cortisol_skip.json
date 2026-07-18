@@ -1,0 +1,7 @@
+{
+  "causes": ["occurrent:569aab9ff13c263e157cb28a7a2dce5a26b1fd570c76c8dbe06612a0e6019b92" ],
+  "effects": ["occurrent:1a245c490ddb060b89750d8d8ba2379fdde5cbeb8423a205d5c900291804164c" ],
+  "id":"causal_relation_object:8d40a0811328a59d6d246a2841e3f28d05fab836e3aadc19dd5c305fea50e441",
+  "skips":true,
+  "type":"causal_relation_object"
+}
