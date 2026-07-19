@@ -1,0 +1,136 @@
+CONNECTOME-LOOPS DEMONSTRATION  (v1)
+
+Repository: connectome-loops
+File: Demonstration, one of six
+Version: 1
+Author: PrologAI Community
+
+
+ABOUT THIS FILE
+
+This is the Demonstration file.
+
+It is the owner's addition to the five SPARC phases (Specification, Pseudocode, Architecture, Refinement, Completion), not a sixth phase of the method.
+
+It is a plan of intent: what a person would run to see this repository for themselves, what each run shows, and what a viewer should conclude.
+
+It is not a finished demonstration and it claims no result beyond what the honest gates already report.
+
+Acronyms used in this file: Reward-Prediction-Error (RPE), Causal Relation Object (CRO), Abstraction and Reasoning Corpus (ARC), Artificial General Intelligence (AGI).
+
+
+WHAT A DEMONSTRATION IS MEANT TO SHOW
+
+The claim under demonstration is narrow and honest.
+
+It is that one whole reentrant circuit can be built as a single coarse pack, with its regions kept internal and provably uncoupled, producing behaviour byte-identical to the finer-grained slice - and that doing so pushes the architecture's costs inside the pack in ways the platform cannot express.
+
+A demonstration should let a viewer watch the loop close, watch the discipline hold inside one file, and then read the price in the Ledger.
+
+
+BEFORE YOU RUN
+
+The demonstration needs SWI-Prolog version 9 and a local, unmodified PrologAI checkout.
+
+Set the environment variable PROLOGAI_HOME to that checkout if it is not at the default location /home/ccaitwo/PrologAI.
+
+Nothing under PrologAI is copied or changed; the scripts add its packs to the library path at run time only.
+
+
+RUN ONE - CLOSE THE LOOP AND READ THE NARRATION
+
+Command: bin/run_slice.sh 8 5 0.4
+
+The three arguments are the number of laps, the lap on which the cortisol event fires, and the learning rate.
+
+What it shows: a live glass-box trace, one line per hop, each line marked "via lattice" to make the point that even though the three regions now share one pack, the beat always arrives through the shared Lattice and never by one section calling another.
+
+What to watch: the token rising by exactly one every hop; the dopamine RPE falling from 1.0 toward zero as the cortex's prediction rises to meet the reward; and, at the event lap, a one-line banner marking the ten-stratum cortisol skip after which the weight barely moves.
+
+What it proves: at the end the runner prints a closure verdict - hop count, token range, region sequence, cortex re-entries - and exits zero only when the loop provably closed.
+
+The capability on display: a reentrant circuit coordinated purely by stigmergy and notification, with zero region-to-region references, running as three background threads that read as one clean sequence.
+
+
+RUN TWO - PROVE THE REGIONS SHARE ONLY THE LATTICE
+
+Command: bin/check_no_coupling.sh
+
+What it shows: the checker splitting the single loop module into its three "INTERNAL REGION MODULE" sections and confirming no section calls or even names another.
+
+Why this run is the heart of the demonstration: in the slice and the atomic arm the regions were separate files, so this was a trivial cross-file search; here the regions share one file, so the guarantee is proven by intra-pack section analysis.
+
+What a viewer should try: inject a cross-region call into one section and re-run, and watch the checker report FAIL - proof that the check is not vacuous.
+
+The capability on display: the closure discipline surviving co-location, enforced by a bespoke linter because the platform provides no intra-pack boundary.
+
+
+RUN THREE - CHECK THE LAYER RULE
+
+Command: bin/check_layers.sh
+
+What it shows: PrologAI's own unmodified layer construct, loaded by its real path, reporting and checking this arm's four packs and finding zero upward edges across three levels.
+
+What to notice, and where the honesty lives: the check passes easily, but the pack that passes it is a single layer-two pack that hides the internal ordering the slice recorded as three layers - the finding LOOPS-1 in the Ledger.
+
+The capability on display: reuse of the platform's construct without modification, and a concrete illustration of what a pack-granular layer rule cannot see.
+
+
+RUN FOUR - VALIDATE THE STRUCTURE
+
+Command: bin/validate_structure.sh
+
+What it shows: all twenty-eight Causalontology 2.0.0 records validated against the platform's unmodified conformance engine, the cortisol CRO classified as skipping with no gap, and the Ed25519 provenance signature verified.
+
+What it writes: each record to structure/<name>.json, so a viewer can open and inspect a content-addressed record whose identity is the hash of its content.
+
+The capability on display: a clean separation of structure from runtime - the validator needs no runtime substrate, and the runner needs no grounding engine, because causal_map and loop are disjoint packs.
+
+
+RUN FIVE - RUN THE PER-PACK TESTS
+
+Command: bin/run_tests.sh
+
+What it shows: every pack's in-pack PLUnit suite loading and passing in its own process.
+
+What a viewer should notice: the dynamics and structure packs test in isolation, but a single region section cannot - loading the cortex section means loading the whole loop pack, the finding LOOPS-3.
+
+
+READING THE PRODUCT: THE LEDGER AND THE COMPARISON
+
+After the runs, the demonstration directs the viewer to the two files that are the actual deliverable.
+
+LEDGER.md records the four findings (LOOPS-1 through LOOPS-4), three of them facets of one absence - the missing intra-pack module boundary - and one a second sighting of the slice's layer-entry-point finding.
+
+COMPARISON.md lays this arm's numbers beside the atomic control arm across an eight-row rubric: pack count (four versus eleven, projected to roughly twenty-three versus roughly one hundred forty-three), coupling (two edges versus twenty-nine), layer pressure, testability, grounding fit, new gaps, and the scale verdict.
+
+The viewer should read the numbers as argued from the built code, not as claims about the world.
+
+
+WHAT A VIEWER SHOULD CONCLUDE
+
+That the coarse decomposition rule genuinely works and genuinely closes the loop, with behaviour identical to the finer arm.
+
+That its cost is real and lands in a specific place: inside the pack, below the platform's resolution, where the layer rule, the coupling check, and the per-pack test can no longer reach.
+
+That the leanness is a true advantage for a system reasoned about one circuit at a time, and a true liability for one reasoned about one construct at a time - the mirror image of the atomic arm.
+
+That the honest scores are forty out of forty and twelve out of twelve on the mini regression, a ten-percent spot-check, with the full regression deferred - and never anything larger.
+
+
+WHAT THIS DEMONSTRATION DOES NOT CLAIM
+
+It does not claim a full-benchmark score.
+
+It does not claim a final verdict on pack sizing; that waits until all three arms - atomic, loops, and strata - can be laid side by side.
+
+It does not modify PrologAI, Mentova, or the frozen spike, and it treats every gap as a Ledger entry rather than a fix.
+
+
+DEMONSTRATION REFLECTION
+
+The best demonstration of this repository is a quiet one.
+
+The loop closes, the trace matches the slice to the byte, the regions never touch, and the gates go green - and then the interesting part is not the success but the price, which is why the demonstration ends in the Ledger rather than in the terminal.
+
+A demonstration that stopped at the passing runs would miss the whole point: the finding is the cost, honestly named, of drawing the pack boundary around a whole circuit.

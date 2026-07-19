@@ -1,0 +1,124 @@
+CONNECTOME-LOOPS REFINEMENT  (v1)
+
+Repository: connectome-loops
+File: Refinement, one of six
+Version: 1
+Author: PrologAI Community
+
+
+ABOUT THIS FILE
+
+This is the Refinement phase of SPARC (Specification, Pseudocode, Architecture, Refinement, Completion).
+
+Refinement is the testing story: how the design was verified and where it was corrected while it was being built.
+
+For a frozen granularity experiment the testing story has a particular shape.
+
+The behaviour is not being invented; it is being held identical to an earlier slice, so most of the verification proves sameness (nothing drifted) rather than proving new function.
+
+Acronyms used in this file: Reward-Prediction-Error (RPE), JavaScript Object Notation (JSON), Causal Relation Object (CRO), Continuous Integration (CI), Abstraction and Reasoning Corpus (ARC), Artificial General Intelligence (AGI).
+
+
+THE FIVE HONEST GATES
+
+Each gate is a runnable check that exits zero only when its own condition genuinely holds; none is decorative.
+
+Gate one - the closure proof (bin/run_slice.sh).
+
+The runner ticks the loop and then proves it closed, not by trusting the run but by inspecting the retained hop trace.
+
+It checks four conditions at once: the hop count equals three-times-the-laps plus one, the token sequence is exactly one through that count with no gap or repeat, the acting-region sequence is cortex followed by that many repetitions of striatum-then-thalamus-then-cortex, and the cortex re-entered exactly one more time than the number of laps.
+
+Only when all four hold does the verdict read pass and the process exit zero.
+
+Gate two - the coupling checker (bin/check_no_coupling.sh).
+
+This gate enforces the closure discipline: zero region-to-region references.
+
+Because the three regions now share one file, the checker cannot rely on a cross-file name search as the slice and the atomic arm could; it must split the loop module on its "INTERNAL REGION MODULE" markers and analyse each section's code with comments stripped.
+
+It fails if any section calls another region's loop_<region>_ predicate or even names another region as a bare word.
+
+Gate three - the layer checker (bin/check_layers.sh).
+
+This gate loads PrologAI's own unmodified library(layer) and runs its directory report and directory check over this arm's four packs.
+
+It exits zero only when there is no upward import edge among the declared packs.
+
+Gate four - the structure validator (bin/validate_structure.sh).
+
+This gate validates all twenty-eight records against the platform's unmodified Causalontology 2.0.0 conformance engine, checks that the cortisol CRO classifies as skipping with an empty skip-gap list, and verifies the Ed25519 provenance signature.
+
+It writes each record to structure/<name>.json as an inspectable artifact and exits zero only when every record and both special checks pass.
+
+Gate five - the in-pack tests (bin/run_tests.sh).
+
+Every pack ships a PLUnit suite under test/test_<name>.pl so no pack can rot unseen.
+
+The runner loads each suite in its own SWI-Prolog process and fails if any suite fails.
+
+
+THE ADVERSARIAL EDGE: PROVING THE CHECKS ARE NOT VACUOUS
+
+A gate that always passes proves nothing.
+
+The coupling checker is therefore tested against an injected violation: when a deliberate cross-region call is placed in one section, the checker reports FAIL and exits non-zero.
+
+This matters most for this arm, because the coupling guarantee lost its cheap cross-file enforcement the moment the regions were merged into one file; a bespoke section linter is only trustworthy if it can be shown to catch the thing it exists to catch.
+
+The closure proof is likewise adversarial by construction: a stalled run (the done marker never arrives within the timeout) yields the outcome stalled and a fail verdict, so a loop that silently fails to close cannot masquerade as a pass.
+
+
+PROVING SAMENESS: THE BYTE-IDENTICAL INVARIANTS
+
+Two invariants are verified by exact comparison rather than by a functional test.
+
+The narrated trace is proven byte-identical to the Wave 2 slice's and the atomic arm's trace using the file-comparison tool diff: same hops, same tokens, same weights, same dopamine decay, same cortisol event.
+
+The twenty-eight structure records are proven byte-identical to the slice's, which here is guaranteed structurally because this arm reuses the slice's causal_map, neurochemistry, and neural_lattice packs verbatim; identity is the hash of content, so any change would have changed a hash.
+
+Sameness is the point: the only intended difference between this arm and the slice is the pack boundary, and these comparisons prove nothing else moved.
+
+
+THE BUG FOUND AND FIXED DURING THE BUILD
+
+Because three of the four packs were carried over verbatim from the slice, their source-file header banners still named the earlier repository.
+
+The build corrected this: the reused file-header banners were edited to name connectome-loops, while the provenance note recording that the file was reused verbatim from the slice was retained.
+
+This was a documentation-only correction to comment banners; it changed no behaviour, and the byte-identical trace and record checks were re-confirmed afterward.
+
+The correction is visible in the repository history as the header-fix change that followed the initial scaffold.
+
+No behavioural bug was found, and this is itself a recorded result: the closure discipline survived co-location of the three regions in one file with no change to the trace.
+
+
+THE MINI REGRESSION (a ten-percent spot-check)
+
+Alongside the arm's own gates, a shared mini regression guards against collateral damage to the wider platform.
+
+It runs a ten-percent spot-check of the two solved benchmarks - ARC-AGI-1 at forty out of forty and ARC-AGI-2 at twelve out of twelve - by exercising every tenth task.
+
+It is a spot-check, not the full run: a green mini regression is evidence of no obvious breakage, and it must never be reported as the full four-hundred and one-hundred-twenty scores.
+
+The full benchmark regression is deferred by design for this documentation-and-experiment wave.
+
+
+WHAT REFINEMENT DID NOT DO
+
+Refinement did not optimise, re-architect, or re-tune anything, because the code is frozen and its behaviour must match the slice exactly.
+
+It did not add features; the arm's whole value is holding everything constant except the pack boundary.
+
+The refinement work was verification and one comment-banner correction, nothing more.
+
+
+REFINEMENT REFLECTION
+
+The testing story exposes the arm's central finding from the testing side.
+
+Three of the five gates - closure, structure, and the per-pack tests for the dynamics and structure packs - carried over cleanly, because those packs are still separate files.
+
+But the coupling gate had to be rebuilt as intra-pack section analysis, and the region-level test isolation the atomic arm enjoyed simply disappeared: a region section cannot be loaded or exercised without loading the whole loop pack.
+
+The trade-off Refinement records is that coarse packing moves verification effort from the language (file boundaries and per-pack loading, which the platform enforces for free) into bespoke scripts and prose (a section linter and a written note), which is precisely the intra-pack module boundary the Ledger says PrologAI still lacks.

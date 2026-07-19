@@ -1,0 +1,170 @@
+CONNECTOME-LOOPS ARCHITECTURE  (v1)
+
+Repository: connectome-loops
+File: Architecture, one of six
+Version: 1
+Author: PrologAI Community
+
+
+ABOUT THIS FILE
+
+This is the Architecture phase of SPARC (Specification, Pseudocode, Architecture, Refinement, Completion).
+
+The Architecture phase describes the skeleton: the parts, the layers they sit on, the substrate that carries them, and the interfaces through which they talk.
+
+Acronyms used in this file: Uniform Resource Identifier (URI), JavaScript Object Notation (JSON), Causal Relation Object (CRO), Continuous Integration (CI), Reward-Prediction-Error (RPE).
+
+
+THE ONE ARCHITECTURAL IDEA
+
+The whole repository is an experiment in where to draw the pack boundary.
+
+A pack is the smallest unit PrologAI can name, load, layer, and test on its own.
+
+This coarse arm draws the boundary around a whole reentrant circuit: one loop is one pack, and the loop's regions are internal sections of that pack.
+
+The contrast arm, connectome-atomic, drew the boundary around each named construct and produced eleven packs; this arm produces four.
+
+
+THE FOUR PACKS AND THEIR LAYERS
+
+Four packs carve the identical brain-circuit anatomy across three layers.
+
+• neural_lattice - layer 0 - the closure substrate: stigmergy for state plus notification for reactivity, over PrologAI's Lattice. Reused verbatim from the slice.
+
+• neurochemistry - layer 1 - the native dynamics: dopamine RPE, cortisol tone, and the three-factor plasticity rule, as ordinary arithmetic. Reused verbatim from the slice.
+
+• causal_map - layer 1 - all twenty-eight Causalontology 2.0.0 structure records for the anatomy. Reused verbatim from the slice.
+
+• loop - layer 2 - the whole cortico-basal-ganglia-thalamo-cortical circuit, with cortex, striatum, and thalamus as internal region sections.
+
+Three of the four packs are the slice's already-coarse packs, carried over unchanged.
+
+Only the three region packs of the slice were merged into the one loop pack; that single merge is the entire architectural difference between this arm and the slice.
+
+
+THE STRICT LAYER RULE, APPLIED
+
+Each pack declares a layer number in its manifest, and a pack may import only packs at a strictly lower number.
+
+The three levels here are: the Lattice at zero, the dynamics and the structure at one, and the loop at two.
+
+The loop imports neural_lattice (zero) and neurochemistry (one); both are downward edges, so the rule holds.
+
+The layer checker passes with zero upward edges.
+
+One honest consequence is recorded in the Ledger as LOOPS-1: the slice and the atomic arm placed the three regions at three distinct layers (cortex above striatum above thalamus), but this arm collapses that internal hierarchy into a single layer-two pack, and the pack-granular layer rule can no longer see the ordering the anatomy carries.
+
+
+THE PACK GRAPH (a text diagram)
+
+An arrow means "imports", and every arrow points downward in layer number.
+The two dotted arrows leave the repository into the unmodified PrologAI platform.
+
+    layer 2                         [ loop ]
+                                    (cortex | striatum | thalamus, internal sections)
+                                     |            |
+                       imports       |            |  imports
+                 +-------------------+            +----------------------+
+                 v                                                       v
+    layer 1   [ neurochemistry ]                                   ( reused... )
+                 (dopamine, cortisol, plasticity)                        |
+                                                                         |
+    layer 1   [ causal_map ]  --- imports only PrologAI (dotted) ---> ( causal_core, signing )
+                 (28 structure records)
+                 |
+                 v  imports
+    layer 0   [ neural_lattice ]  --- imports only PrologAI (dotted) ---> ( lattice )
+                 (stigmergy + notification)
+
+    Reused read-only from PrologAI (via PROLOGAI_HOME):
+        library(lattice)        the shared coordination store
+        library(actors)         the cyclic_actor background threads
+        library(layer)          the strict layer-rule checker
+        library(causal_core)    the Causalontology 2.0.0 identity/kind/semantics engine
+        library(signing)        the pure-Prolog Ed25519 signing layer
+        tests/causalontology_conformance   the schema interpreter and vectors
+
+Note two clean separations visible in the graph.
+
+First, the loop pack imports the substrate and the dynamics but NOT causal_map, so the runtime and the grounding stay disjoint - the runner needs no grounding engine and the validator needs no runtime substrate.
+
+Second, causal_map and neurochemistry are pure leaves within the arm; they import no other arm pack, only PrologAI, so the arm's internal coupling is just the two edges leaving the loop pack.
+
+
+THE SUBSTRATE AND THE LATTICE COORDINATION
+
+The Lattice is a shared store of node-facts held at a fixed nexus URI, "locus://localhost/connectome_slice".
+
+Coordination follows two rules.
+
+Stigmergy for state: a region takes the current cue - a snapshot of the whole circulating state - acts on it, and posts the next snapshot.
+
+Notification for reactivity: every write notifies waiters, so a region that awaits a cue blocks on a private queue and is woken by the write, never by polling.
+
+The cue is addressed by a NUMBER, not a name: a region posts phase_0, phase_1, or phase_2, and awaits its own phase.
+
+Because exactly one phase cue exists at any instant, only one region is ever active, which is why the glass-box narration reads as a clean single sequence even though three region threads are alive.
+
+This is the mechanism that lets three sections of one file coordinate without ever referring to one another.
+
+
+THE INTERFACES BETWEEN PACKS
+
+The loop pack talks to the substrate through the neural_lattice_ predicates: open, reset, post_cue, await_cue, signal_done, await_done, hop, and narrate.
+
+The loop pack talks to the dynamics through the neurochemistry_ predicates: reward, dopamine, plasticity, cortisol_decay.
+
+The driver (bin/run_slice.pl) talks to the loop pack through its three exported ticks - loop_cortex_tick, loop_striatum_tick, loop_thalamus_tick - each run on its own cyclic_actor thread.
+
+The validator (bin/validate_structure.pl) talks to causal_map through causal_map_records, causal_map_signed_assertion, and causal_map_skip_check, and to PrologAI through co_validate_schema, causal_core_validate_semantics, and co_verify_record.
+
+Inside the loop pack the three region sections share no interface at all with one another; their only shared surface is the numbered Lattice cue.
+
+
+THE STRUCTURE RECORDS (the causal_map pack)
+
+causal_map mints one record of every Causalontology kind the cut touches, and validates each against the platform's unmodified 2.0.0 engine.
+
+The twenty-eight records span these kinds: strata (the neuroendocrine ladder ordinals), continuants (cortex, striatum, thalamus, substantia nigra), occurrents (the events and processes the loop and the hormone realise), a realizable (the striatum's plasticity disposition), ports (the corticostriatal and dopaminergic ports), a bridge, a transmissive conduit (the nigrostriatal dopamine projection), a computational conduit (the corticostriatal projection), a plain CRO (the corticostriatal transform), a skipping CRO (cortisol crossing ten strata with skips true), a token (one cortisol episode), and a signed assertion (Ed25519 provenance over the skipping CRO).
+
+The transmissive-versus-computational decision follows the Perfect Wire Test: a conduit is transmissive when a perfect wire would suffice, and computational when it performs a transformation a wire cannot.
+
+Each record's identity is the hash of its content, computed by causal_core_identify, so identity is byte-exact and any drift would change the hash.
+
+
+WHERE PROLOGAI IS REUSED, READ-ONLY
+
+Every runnable path locates a local PrologAI checkout through the environment variable PROLOGAI_HOME, defaulting to /home/ccaitwo/PrologAI.
+
+The scripts add the needed PrologAI pack directories to the SWI-Prolog library path at run time; nothing under PrologAI is copied or edited.
+
+The runner adds library(lattice) and library(actors); the layer checker adds library(layer); the validator adds library(causal_core) and the conformance harness; the test runner adds all of these as its packs require.
+
+If PROLOGAI_HOME does not point at a valid checkout, each script prints a clear message and exits with code two rather than guessing.
+
+
+THE RUNNABLE SURFACE (bin scripts)
+
+• bin/run_slice.sh - assemble the library path and tick the loop; print the narrated trace and the closure verdict.
+
+• bin/check_layers.sh - load PrologAI's own library(layer) and run its directory report and check against this arm's packs.
+
+• bin/check_no_coupling.sh - split the loop module into its three region sections and confirm no section references another (intra-pack analysis, because the regions now share one file).
+
+• bin/validate_structure.sh - validate every structure record, the skip finding, and the signature; write each record to structure/ as JSON.
+
+• bin/run_tests.sh - run every pack's in-pack test suite in its own process.
+
+
+ARCHITECTURAL REFLECTION
+
+The architecture is deliberately lean: four packs, three layers, two internal import edges.
+
+That leanness is the arm's headline property and its trap in equal measure.
+
+It is the property a system reasoned about one circuit at a time wants - minimal ceremony, minimal cross-pack coupling, a shallow layer stack that projects to roughly twenty-three packs for a full connectome rather than the atomic arm's roughly one hundred forty-three.
+
+It is the trap a system reasoned about one construct at a time falls into - the internal layer hierarchy vanishes, a region cannot be loaded or tested alone, and the no-coupling rule must be enforced by a hand-written section linter rather than by the file system.
+
+The architecture pushes the cost off the pack boundary and inside the pack, which is exactly the trade the experiment set out to measure and exactly what the Ledger records.
