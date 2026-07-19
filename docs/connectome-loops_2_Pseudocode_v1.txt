@@ -1,0 +1,284 @@
+CONNECTOME-LOOPS PSEUDOCODE  (v1)
+
+Repository: connectome-loops
+File: Pseudocode, one of six
+Version: 1
+Author: PrologAI Community
+
+
+ABOUT THIS FILE
+
+This is the Pseudocode phase of SPARC (Specification, Pseudocode, Architecture, Refinement, Completion).
+
+It is written in English-Readable-Code (ERC), a notation whose lines map mechanically onto the repository's actual Prolog.
+
+ERC has three operation tiers.
+
+A PRIMITIVE operation translates one-to-one into a code statement, such as assignment, arithmetic, comparison, a list operation, or a control-flow keyword (IF, THEN, ELSE, WHILE, FOR EACH, TRY, CATCH, RETURN).
+
+A COMPOSITE operation is a higher-level step that expands deterministically into primitives; where a full expansion matters, it is shown.
+
+A LIBRARY operation maps to a documented external interface and is referenced by name, not expanded.
+
+The LIBRARY operations referenced below, all supplied by the unmodified PrologAI platform, are:
+
+• lattice_open, lattice_put, lattice_take, lattice_await, lattice_notify - the shared coordination store (the Lattice); every write notifies waiters, so awaiting a cue never busy-waits.
+
+• cyclic_actor, cyclic_actor_stop - run a goal repeatedly on a background thread, and stop it.
+
+• causal_core_identify - stamp a content object with its Causalontology content-addressed identity.
+
+• co_validate_schema, causal_core_validate_semantics - validate a record against its kind's schema and the local semantic rules.
+
+• co_verify_record - verify a record's Ed25519 signature.
+
+• layer_report_dir, layer_check_dir - report and check the strict layer rule over a directory of packs.
+
+Acronyms used in this file: Reward-Prediction-Error (RPE), Uniform Resource Identifier (URI), JavaScript Object Notation (JSON), Causal Relation Object (CRO), Abstraction and Reasoning Corpus (ARC), Artificial General Intelligence (AGI).
+
+
+=====================================================================
+SECTION ONE - THE LATTICE SUBSTRATE (pack neural_lattice, layer 0)
+=====================================================================
+
+PROCEDURE neural_lattice_open(returns Nexus):
+    STEP set Address to the fixed slice URI "locus://localhost/connectome_slice".
+    LIBRARY open (or reuse) the nexus at Address with lattice_open, binding Nexus.
+    RETURN Nexus.
+
+PROCEDURE neural_lattice_reset(Nexus):
+    STEP retract every coordination fact held on Nexus (all cues, state, done markers).
+    STEP retract every retained hop record so the trace starts empty.
+
+PROCEDURE neural_lattice_post_cue(Nexus, Phase, State):
+    STEP build Relation as the atom "phase_" joined to the number Phase (a NUMBER, never a region name).
+    LIBRARY put the cue carrying [State] onto Nexus under Relation with lattice_put; the put notifies all waiters.
+
+PROCEDURE neural_lattice_await_cue(Nexus, Phase, returns State):
+    STEP build Relation as "phase_" joined to Phase.
+    GUARD block with no processor use until a cue exists under Relation, using lattice_await with an infinite timeout (woken by lattice_notify).
+    LIBRARY take exactly one matching cue with lattice_take, binding State, so no stale cue can re-fire.
+    RETURN State.
+
+PROCEDURE neural_lattice_hop(Via, Region, Token):
+    STEP count the hops recorded so far and call it Prior.
+    STEP set Ordinal to Prior plus one.
+    STEP append the record hop(Ordinal, Region, Token) to the retained trace.
+    STEP display the glass-box line "hop <Ordinal> via <Via> <Region> token=<Token>" to the console.
+
+PROCEDURE neural_lattice_signal_done(Nexus, Token):
+    LIBRARY put a single done marker carrying Token onto Nexus with lattice_put.
+
+PROCEDURE neural_lattice_await_done(Nexus, Timeout, returns Token):
+    GUARD block until a done marker appears or Timeout lapses, using lattice_await; fail on timeout.
+    RETURN the carried Token.
+
+
+=====================================================================
+SECTION TWO - THE NATIVE DYNAMICS (pack neurochemistry, layer 1)
+=====================================================================
+
+These are pure arithmetic leaves; none is a Causalontology record.
+
+PROCEDURE neurochemistry_reward(Lap, returns Reward):
+    STEP set Reward to 1.0 on every lap (a reliable cue-reward association).
+    RETURN Reward.
+
+PROCEDURE neurochemistry_dopamine(Reward, Prediction, returns Dopamine):
+    STEP calculate the difference of Reward and Prediction; this is the RPE.
+    RETURN the difference as Dopamine.
+
+PROCEDURE neurochemistry_cortisol_suppression(Cortisol, returns Factor):
+    STEP calculate Factor as 1.0 divided by (1.0 plus Cortisol); baseline zero leaves Factor at 1.0.
+    RETURN Factor.
+
+PROCEDURE neurochemistry_cortisol_decay(Cortisol, returns NewCortisol):
+    STEP calculate NewCortisol as Cortisol times 0.9 (a slow return toward baseline).
+    RETURN NewCortisol.
+
+PROCEDURE neurochemistry_plasticity(Weight, Pre, Post, Dopamine, Cortisol, Rate, returns NewWeight):
+    STEP call neurochemistry_cortisol_suppression(Cortisol) and call the result Suppression.
+    STEP calculate Delta as Rate times Pre times Post times Dopamine times Suppression (the three-factor rule).
+    STEP calculate Raw as Weight plus Delta.
+    STEP clamp Raw into the closed interval from 0.0 to 1.0, giving NewWeight.
+    RETURN NewWeight.
+
+
+=====================================================================
+SECTION THREE - THE REENTRANT LOOP (pack loop, layer 2, regions internal)
+=====================================================================
+
+The three region sections never call one another; each awaits its own numbered
+phase cue and posts the next slot's cue through the Lattice.
+
+INTERNAL REGION MODULE cortex (the origin and re-entry point)
+
+PROCEDURE loop_cortex_tick(Nexus):
+    GUARD await the phase-0 cue on Nexus, binding State0 (block, no busy-poll).
+    STEP read Lap, NLaps, Weight, and Token0 from the State0 snapshot.
+    STEP calculate Token as Token0 plus one.
+    LIBRARY record the cortical hop with neural_lattice_hop(lattice, cortex, Token).
+    IF Lap is greater than NLaps THEN
+        STEP narrate "loop at rest; final token=<Token>".
+        STEP call neural_lattice_signal_done(Nexus, Token).
+    ELSE
+        STEP set Prediction to Weight (the learned value estimate).
+        STEP narrate the lap header and Prediction.
+        STEP set State1 to State0 with token set to Token and prediction set to Prediction.
+        STEP call neural_lattice_post_cue(Nexus, 1, State1) - hand on by NUMBER, naming no region.
+    END IF.
+
+INTERNAL REGION MODULE striatum (the dopamine-gated plasticity site)
+
+PROCEDURE loop_striatum_tick(Nexus):
+    GUARD await the phase-1 cue on Nexus, binding State0.
+    STEP read Lap, Prediction, Weight0, Cortisol, Rate, and Token0 from State0.
+    STEP call neurochemistry_reward(Lap), giving Reward.
+    STEP call neurochemistry_dopamine(Reward, Prediction), giving Dopamine.
+    STEP call neurochemistry_plasticity(Weight0, 1.0, 1.0, Dopamine, Cortisol, Rate), giving Weight.
+    STEP calculate Token as Token0 plus one.
+    LIBRARY record the striatal hop with neural_lattice_hop(lattice, striatum, Token).
+    STEP narrate reward, prediction, dopamine RPE, cortisol, and the weight change.
+    STEP set State1 to State0 with weight, dopamine, reward, and token updated.
+    STEP call neural_lattice_post_cue(Nexus, 2, State1).
+
+INTERNAL REGION MODULE thalamus (the relay that closes the loop)
+
+PROCEDURE loop_thalamus_tick(Nexus):
+    GUARD await the phase-2 cue on Nexus, binding State0.
+    STEP read Lap, Token0, Cortisol0, and EventLap from State0.
+    STEP calculate Token as Token0 plus one.
+    LIBRARY record the thalamic hop with neural_lattice_hop(lattice, thalamus, Token).
+    IF Lap is equal to EventLap THEN
+        STEP set Cortisol to 3.0 (the chronic social-subordination surge).
+        STEP narrate the CORTISOL EVENT banner: one physical step, ten strata skipped, no intervening mechanism.
+    ELSE
+        STEP call neurochemistry_cortisol_decay(Cortisol0), giving Cortisol.
+    END IF.
+    STEP calculate NextLap as Lap plus one.
+    STEP set State1 to State0 with token, cortisol, and lap updated.
+    STEP call neural_lattice_post_cue(Nexus, 0, State1) - the beat returns to the origin slot.
+
+
+=====================================================================
+SECTION FOUR - THE DRIVER AND THE CLOSURE PROOF (bin/run_slice.pl)
+=====================================================================
+
+PROCEDURE run_slice(NLaps, EventLap, Rate):
+    STEP call neural_lattice_open, binding Nexus.
+    STEP call neural_lattice_reset(Nexus).
+    STEP print the run banner (loop, coordination discipline, parameters).
+    LIBRARY spawn three background threads with cyclic_actor: cortex on loop_cortex_tick(Nexus), striatum on loop_striatum_tick(Nexus), thalamus on loop_thalamus_tick(Nexus); each immediately blocks on its own cue.
+    STEP build the Seed snapshot: lap 1, token 0, weight 0.0, prediction 0.0, cortisol 0.0, n_laps NLaps, rate Rate, event_lap EventLap.
+    STEP call neural_lattice_post_cue(Nexus, 0, Seed) - the cortex wakes and the loop begins.
+    TRY
+        STEP call neural_lattice_await_done(Nexus, 30, FinalToken) and set Outcome to done(FinalToken).
+    CATCH the timeout
+        STEP set Outcome to stalled.
+    END TRY.
+    LIBRARY stop each region thread with cyclic_actor_stop, tolerating an already-stopped one.
+    STEP call run_slice_verdict(NLaps, Outcome), giving Verdict.
+    IF Verdict is equal to pass THEN halt with code 0 ELSE halt with code 1. END IF.
+
+PROCEDURE run_slice_verdict(NLaps, Outcome, returns Verdict):
+    STEP fetch the retained hop trace in order as Hops.
+    STEP extract Regions (the acting region of each hop) and Tokens (the token of each hop).
+    STEP calculate ExpectedHops as three times NLaps plus one.
+    STEP build ExpectedRegions as cortex followed by NLaps repetitions of [striatum, thalamus, cortex].
+    STEP build ExpectedTokens as the list of numbers from 1 to ExpectedHops.
+    STEP count how many hops were cortex and call it CortexCount.
+    IF Outcome is done(_)
+        AND the length of Hops equals ExpectedHops
+        AND Regions equals ExpectedRegions
+        AND Tokens equals ExpectedTokens
+        AND CortexCount equals NLaps plus one
+    THEN set Verdict to pass ELSE set Verdict to fail. END IF.
+    STEP print the verdict block (outcome, hops versus expected, zero actor-to-actor refs, no busy-poll, VERDICT).
+    RETURN Verdict.
+
+
+=====================================================================
+SECTION FIVE - MINTING AND VALIDATING THE STRUCTURE (causal_map, validator)
+=====================================================================
+
+PROCEDURE cm_id(Body, returns Out):
+    LIBRARY compute the content-addressed identity of Body with causal_core_identify, binding Id.
+    STEP put Id into Body under key id, giving Out.
+    RETURN Out.
+
+PROCEDURE causal_map_records(returns Records):
+    STEP mint the strata, the continuants, the occurrents, the realizable, the ports, the two conduits (one transmissive, one computational), the plain CRO, the skipping cortisol CRO, the token, and the signed assertion - each stamped by cm_id - as twenty-eight labelled record terms.
+    RETURN Records.
+
+PROCEDURE validate_structure_main():
+    STEP call causal_map_records, binding Records.
+    STEP set SchemaFails to the empty list.
+    FOR EACH record(Name, Kind, Dict) in Records:
+        LIBRARY call co_validate_schema(Dict, Kind), binding SchemaOk and SchemaWhy.
+        LIBRARY call causal_core_validate_semantics(Dict, Kind), binding SemReasons.
+        IF SchemaOk is true AND SemReasons is empty
+        THEN print an "ok" line
+        ELSE append this record to SchemaFails and print a "FAIL" line.
+        END IF.
+        STEP write Dict to structure/<Name>.json as JSON.
+    END FOR.
+    STEP classify the cortisol CRO; set SkipOk to ok only if it is skipping with an empty skip-gap list.
+    LIBRARY verify the signed provenance assertion with co_verify_record; set SignOk to ok only if it verifies.
+    IF SchemaFails is empty AND SkipOk is ok AND SignOk is ok
+    THEN halt with code 0 ELSE halt with code 1. END IF.
+
+
+=====================================================================
+SECTION SIX - THE INTRA-PACK COUPLING CHECK (bin/check_no_coupling.sh)
+=====================================================================
+
+PROCEDURE check_no_coupling():
+    STEP read the single loop module source as text.
+    STEP split the text on the "INTERNAL REGION MODULE: <name>" markers into a map from region name to section body.
+    STEP set Violations to the empty list.
+    FOR EACH region r in [cortex, striatum, thalamus]:
+        IF section r is missing THEN append a "marker missing" violation. END IF.
+    END FOR.
+    FOR EACH (r, body) in the section map:
+        STEP strip block comments and line comments from body, leaving Code.
+        FOR EACH other region o not equal to r:
+            IF Code matches "loop_<o>_" THEN append a "calls region o directly" violation. END IF.
+            IF Code contains the bare word o THEN append a "names region o in code" violation. END IF.
+        END FOR.
+    END FOR.
+    IF Violations is not empty THEN print FAIL and exit 1 ELSE print PASS and exit 0. END IF.
+
+
+=====================================================================
+SECTION SEVEN - TEST INTENTIONS (GIVEN / WHEN / THEN)
+=====================================================================
+
+TEST closure:
+    GIVEN NLaps is 8, EventLap is 5, Rate is 0.4.
+    WHEN run_slice ticks the loop to rest.
+    THEN the trace has three-times-eight-plus-one equals 25 hops, tokens 1..25, region sequence cortex then eight of [striatum, thalamus, cortex], cortex acting 9 times, and the verdict is pass.
+
+TEST trace identity:
+    GIVEN the same parameters as the Wave 2 slice.
+    WHEN the loops arm runs.
+    THEN its narrated trace is byte-identical to the slice's, confirmed by diff.
+
+TEST no coupling:
+    GIVEN the loop module split into its three region sections.
+    WHEN check_no_coupling runs.
+    THEN it reports zero region-to-region references; and WHEN a cross-region call is injected, THEN it reports FAIL (the check is not vacuous).
+
+TEST dopamine decay:
+    GIVEN reward fixed at 1.0 and a prediction rising toward 1.0.
+    WHEN successive laps run.
+    THEN the dopamine RPE falls from 1.0 toward 0.0.
+
+TEST cortisol suppression:
+    GIVEN a cortisol surge to 3.0 on the event lap.
+    WHEN plasticity is applied thereafter.
+    THEN the weight change is suppressed by the factor 1.0 divided by (1.0 plus cortisol), and the weight barely moves.
+
+TEST structure validity:
+    GIVEN the twenty-eight minted records.
+    WHEN the validator runs.
+    THEN every record passes schema and semantics, the cortisol CRO classifies as skipping with no gap, and the Ed25519 signature verifies.

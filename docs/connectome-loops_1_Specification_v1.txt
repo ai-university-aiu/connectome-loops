@@ -1,0 +1,183 @@
+CONNECTOME-LOOPS SPECIFICATION  (v1)
+
+Repository: connectome-loops
+File: Specification, one of six (Specification, Pseudocode, Architecture, Refinement, Completion, Demonstration)
+Version: 1
+Author: PrologAI Community
+
+
+PURPOSE OF THIS DOCUMENT
+
+This is the Specification phase of a five-phase method called SPARC, which stands for Specification, Pseudocode, Architecture, Refinement, and Completion.
+
+The Specification phase writes down, before any structure or logic is discussed, exactly what the repository must do and the qualities it must have.
+
+This document describes a repository that already exists and is frozen: its code and its behaviour are fixed and unchangeable.
+
+The document therefore describes what was built and why; it does not propose, request, or authorise any change to the code.
+
+
+WHAT THIS REPOSITORY IS, IN ONE BREATH
+
+connectome-loops is a granularity experiment.
+
+It is the coarse arm of a three-arm study whose single question is: how big should one code-pack be?
+
+A pack is the smallest unit of code that the host platform, PrologAI, can name, load, layer, and test on its own.
+
+This arm holds one answer to the sizing question: one pack per reentrant loop, with the loop's regions kept inside that pack as internal sections rather than as packs of their own.
+
+The deliverable of the repository is not the code.
+
+The deliverable is the finding: a written record, in the files LEDGER.md and COMPARISON.md, of what building the identical brain-circuit anatomy coarsely revealed that PrologAI still cannot express.
+
+
+THE FIXED EXPERIMENT: ONE VARIABLE, EVERYTHING ELSE HELD CONSTANT
+
+The study varies exactly one thing: the pack boundaries.
+
+Everything else is reused from an earlier, already-built vertical slice named connectome-proto-agi, and is proven to be unchanged.
+
+Held constant, and proven so:
+
+• The behaviour - a cortico-basal-ganglia-thalamo-cortical loop that closes for a chosen number of laps, producing a narrated trace that is byte-identical to the slice's, confirmed by the file-comparison tool diff.
+
+• The data layer - the same twenty-eight structure records written in the Causalontology 2.0.0 data-structure language, byte-identical to the slice's records.
+
+• The dynamics - the same dopamine, cortisol, and synaptic-plasticity arithmetic, reused from the slice's neurochemistry pack without edit.
+
+• The closure mechanism - coordination through a shared coordination store called the Lattice, with zero region-to-region references and no busy-waiting.
+
+• The platform - PrologAI itself, reused read-only and unmodified.
+
+Only the pack boundaries move.
+
+This arm merges the three region packs of the slice into a single loop pack; the three other packs (substrate, dynamics, structure) carry over verbatim.
+
+
+FUNCTIONAL REQUIREMENTS (WHAT THE REPOSITORY MUST DO)
+
+FR-1  Close the loop.
+
+The repository must tick a reentrant circuit - cortex, then striatum, then thalamus, then back to cortex - for a caller-chosen number of laps, and prove it closed.
+
+The proof is a trace of exactly three-times-the-number-of-laps plus one hops, a strictly increasing token that runs from one to that count, the region sequence cortex followed by that many repetitions of the triple striatum-then-thalamus-then-cortex, and a cortex that re-enters exactly one more time than the number of laps.
+
+FR-2  Keep the regions internal, and uncoupled.
+
+The three regions must live as internal sections of one loop pack, not as separate packs.
+
+Inside that pack the three sections must never call, name, or address one another; they coordinate only by posting numbered phase cues through the Lattice.
+
+FR-3  Reuse the substrate, dynamics, and structure verbatim.
+
+The coordination substrate (neural_lattice), the dynamics (neurochemistry), and the structure records (causal_map) must be the slice's own packs, carried over without behavioural change.
+
+FR-4  Mint and validate the structure.
+
+The repository must mint twenty-eight Causalontology 2.0.0 records describing the circuit's anatomy - one of every kind the cut touches - and validate each against the platform's unmodified conformance engine, including one skipping causal relation and one signed provenance record.
+
+FR-5  Run the honest gates.
+
+The repository must ship runnable checks: a loop runner, a layer checker, a coupling checker, a structure validator, and the in-pack test suites - each exiting zero only when its own condition genuinely holds.
+
+FR-6  Record the findings.
+
+The repository must record, in LEDGER.md, every wall the coarse decomposition hit, and, in COMPARISON.md, the side-by-side measurement against the atomic control arm.
+
+
+NON-FUNCTIONAL REQUIREMENTS (THE QUALITIES IT MUST HAVE)
+
+NFR-1  Grounding in Causalontology 2.0.0.
+
+Causalontology is the data-structure language every PrologAI part should speak: a process-first foundational ontology in which each structural fact is a content-addressed record whose identity is the hash of its content.
+
+The structure records must be valid against that language's 2.0.0 conformance rules, using the platform's own engine for identity, kinds, semantics, and signing.
+
+The dynamics deliberately stay native arithmetic; a rate constant or a plasticity increment is a number evolving in time, and forcing it into a content-addressed record would be a category error.
+
+NFR-2  The strict layer rule.
+
+Every pack declares a layer number, and a pack may import only packs at a strictly lower layer.
+
+This arm uses three levels: the Lattice at layer zero, the dynamics and the structure at layer one, and the loop at layer two.
+
+The layer checker must pass with zero upward edges.
+
+NFR-3  The closure discipline.
+
+State passes only through the Lattice by stigmergy - a region reads the shared snapshot, acts, and writes the next snapshot - and reactivity is by notification, not by polling.
+
+The count of region-to-region references must be zero, and this must hold even though the three regions now share one file.
+
+NFR-4  The one decomposition rule (this arm's defining invariant).
+
+The coarse rule must be genuinely applied: one pack per reentrant loop, regions internal.
+
+If the arm had produced roughly eleven packs it would have quietly become the atomic arm; it must produce four, with the regions provably internal.
+
+NFR-5  Frozen, unmodified platform.
+
+PrologAI, the companion system Mentova, and the earlier frozen spike must be untouched.
+
+A gap the arm discovers becomes a Ledger entry, never a change to the platform.
+
+
+OBJECTIVES
+
+• Measure the coarse decomposition rule honestly, on a real circuit, not in the abstract.
+
+• Surface what PrologAI still lacks when a whole circuit becomes one pack.
+
+• Produce numbers - pack count, coupling edges, layer levels, testability - that a later verdict can lay beside the atomic arm and the strata arm.
+
+
+CONSTRAINTS
+
+• The behaviour, the twenty-eight records, the dynamics, and the closure mechanism are fixed; only pack boundaries may differ from the slice.
+
+• No edit to PrologAI, Mentova, or the frozen spike is permitted.
+
+• Every predicate is pack-qualified with whole words (for example neural_lattice_post_cue), never a terse two-letter prefix.
+
+• Every line of code carries one plain-English comment immediately above it, per the English-Readable-Code rule.
+
+• The full benchmark regression is deferred; only a ten-percent spot-check runs per wave.
+
+
+ACCEPTANCE CRITERIA (THE GATES IT MUST PASS)
+
+• The loop runner exits zero, and its narrated trace is byte-identical to the slice's (diff clean).
+
+• The coupling checker reports zero region-to-region references and catches an injected cross-region call (so the check is not vacuous).
+
+• The layer checker reports zero upward edges across the three levels.
+
+• The structure validator reports all twenty-eight records valid, the cortisol relation classified as skipping with no gap, and the Ed25519 provenance signature verified.
+
+• Every pack's in-pack test suite passes.
+
+• The mini regression is green: ARC-AGI-1 at forty out of forty and ARC-AGI-2 at twelve out of twelve, a ten-percent spot-check of the full benchmarks (ARC stands for Abstraction and Reasoning Corpus, and AGI stands for Artificial General Intelligence).
+
+
+REFLECTION ON THE MAIN DESIGN CHOICES
+
+Why coarse at all?
+
+Because the sizing question has no answer in the abstract; it must be paid for in real coupling, real testability, and real layer pressure.
+
+The coarse choice was made precisely so its costs would show up somewhere measurable, and the honest expectation was that its costs would appear inside the pack.
+
+Why keep the closure discipline inside a single file?
+
+Sharing a pack makes direct coupling tempting; a region could simply call its neighbour.
+
+Holding the zero-reference rule even when the regions co-locate is what makes the finding trustworthy: the discipline survived co-location, and a bespoke section-aware checker proves it.
+
+The trade-off this arm accepts.
+
+Fewer, larger packs buy minimal ceremony and almost no cross-pack coupling - two import edges in total - at the price of everything that used to be free at a file boundary.
+
+The internal layer hierarchy becomes invisible to the pack-granular layer rule, a region can no longer be tested without loading the whole loop, and the no-coupling guarantee must be re-implemented as a hand-written section linter.
+
+That single absence - PrologAI has no intra-pack module boundary - is the finding the coarse arm was built to expose, and it is recorded honestly in the Ledger rather than patched into the frozen platform.
