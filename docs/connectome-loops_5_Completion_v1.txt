@@ -32,7 +32,7 @@ FINAL GATE RESULTS (HONEST FORM)
 
 • Layers - the layer checker reports zero upward edges across the three levels (neural_lattice 0, neurochemistry and causal_map 1, loop 2).
 
-• Structure - the validator reports all twenty-eight records valid against Causalontology 2.0.0, the cortisol CRO classified as skipping with an empty skip-gap list, and the Ed25519 provenance signature verified.
+• Structure - the validator reports all twenty-eight records valid against Causalontology 3.0.0, the cortisol CRO classified as skipping with an empty skip-gap list, and the Ed25519 provenance signature verified.
 
 • Per-pack tests - every pack's in-pack suite passes.
 
@@ -66,7 +66,7 @@ Every runnable path reuses a local PrologAI checkout, unmodified and read-only, 
 
 The repository does not copy PrologAI and does not hardcode a specific PrologAI commit hash in its own files; it validates and runs against whatever conforming checkout PROLOGAI_HOME names.
 
-The Causalontology grounding is checked by that checkout's own unmodified 2.0.0 conformance engine and vendored conformance harness, so the structure results are only as strong as the pinned engine the platform supplies.
+The Causalontology grounding is checked by that checkout's own unmodified 3.0.0 conformance engine and vendored conformance harness, so the structure results are only as strong as the pinned engine the platform supplies.
 
 The reused platform packs are library(lattice), library(actors), library(layer), library(causal_core), library(signing), and the conformance harness under tests/causalontology_conformance.
 

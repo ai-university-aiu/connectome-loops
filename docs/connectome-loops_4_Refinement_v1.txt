@@ -47,7 +47,7 @@ It exits zero only when there is no upward import edge among the declared packs.
 
 Gate four - the structure validator (bin/validate_structure.sh).
 
-This gate validates all twenty-eight records against the platform's unmodified Causalontology 2.0.0 conformance engine, checks that the cortisol CRO classifies as skipping with an empty skip-gap list, and verifies the Ed25519 provenance signature.
+This gate validates all twenty-eight records against the platform's unmodified Causalontology 3.0.0 conformance engine, checks that the cortisol CRO classifies as skipping with an empty skip-gap list, and verifies the Ed25519 provenance signature.
 
 It writes each record to structure/<name>.json as an inspectable artifact and exits zero only when every record and both special checks pass.
 

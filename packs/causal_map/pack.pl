@@ -3,7 +3,7 @@ name(causal_map).
 % State the fact: version('0.1.0') — a granularity-experiment prototype.
 version('0.1.0').
 % State the fact: title naming the single structure pack the loops arm keeps whole (like the slice).
-title('Connectome loops — causal_map: the Causalontology 2.0.0 structure records for the slice anatomy').
+title('Connectome loops — causal_map: the Causalontology 3.0.0 structure records for the slice anatomy').
 % State the fact: author is the PrologAI Community.
 author('PrologAI Community', 'ai.university.aiu@gmail.com').
 % State the fact: home points at the connectome-loops repository.

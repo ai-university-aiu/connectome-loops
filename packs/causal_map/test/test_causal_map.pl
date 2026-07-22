@@ -1,4 +1,4 @@
-% Test suite for the causal_map pack (Causalontology 2.0.0 grounding).
+% Test suite for the causal_map pack (Causalontology 3.0.0 grounding).
 % Load the causal_map module under test.
 :- use_module(library(causal_map)).
 % Load PrologAI's schema validator to check the minted records here too.
@@ -11,7 +11,7 @@
 % Open the test block for the causal_map pack.
 :- begin_tests(causal_map).
 
-% Every minted record validates against its Causalontology 2.0.0 schema.
+% Every minted record validates against its Causalontology 3.0.0 schema.
 test(all_records_schema_valid) :-
     % Mint the full record list.
     causal_map_records(Records),

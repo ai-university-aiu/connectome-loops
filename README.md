@@ -25,7 +25,7 @@ Everything else is held constant and PROVEN so:
   sequence cortex then N×[striatum, thalamus, cortex], the cortex re-entering N
   times). The narrated trace is **byte-identical** to the slice and the atomic
   arm (verified by `diff`).
-- **The data layer** — the SAME twenty-eight Causalontology 2.0.0 records, proven
+- **The data layer** — the SAME twenty-eight Causalontology 3.0.0 records, proven
   **byte-identical** to the slice's `structure/`. (This arm reuses the slice's
   `causal_map` pack verbatim, so identity is guaranteed.)
 - **The dynamics** — the same dopamine RPE, cortisol suppression, and three-factor
@@ -46,7 +46,7 @@ Four packs carve the identical anatomy:
 ```
 packs/neural_lattice/   layer 0  closure substrate (stigmergy + await/notify)     [reused verbatim from the slice]
 packs/neurochemistry/   layer 1  dopamine RPE, cortisol tone, three-factor rule    [reused verbatim from the slice]
-packs/causal_map/       layer 1  all 28 Causalontology 2.0.0 structure records     [reused verbatim from the slice]
+packs/causal_map/       layer 1  all 28 Causalontology 3.0.0 structure records     [reused verbatim from the slice]
 packs/loop/             layer 2  the whole reentrant circuit — cortex, striatum, thalamus as INTERNAL sections
 ```
 
@@ -78,7 +78,7 @@ bin/check_layers.sh
 #     cross-file grep — see LEDGER.md, LOOPS-2.)
 bin/check_no_coupling.sh
 
-# 4. Validate every Causalontology 2.0.0 structure record + the skip finding + the signature.
+# 4. Validate every Causalontology 3.0.0 structure record + the skip finding + the signature.
 #    (bin/validate_structure.sh is the wrapper; it runs the validator bin/validate_structure.pl.)
 bin/validate_structure.sh
 

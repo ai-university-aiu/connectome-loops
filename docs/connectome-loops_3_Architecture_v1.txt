@@ -34,7 +34,7 @@ Four packs carve the identical brain-circuit anatomy across three layers.
 
 • neurochemistry - layer 1 - the native dynamics: dopamine RPE, cortisol tone, and the three-factor plasticity rule, as ordinary arithmetic. Reused verbatim from the slice.
 
-• causal_map - layer 1 - all twenty-eight Causalontology 2.0.0 structure records for the anatomy. Reused verbatim from the slice.
+• causal_map - layer 1 - all twenty-eight Causalontology 3.0.0 structure records for the anatomy. Reused verbatim from the slice.
 
 • loop - layer 2 - the whole cortico-basal-ganglia-thalamo-cortical circuit, with cortex, striatum, and thalamus as internal region sections.
 
@@ -81,7 +81,7 @@ The two dotted arrows leave the repository into the unmodified PrologAI platform
         library(lattice)        the shared coordination store
         library(actors)         the cyclic_actor background threads
         library(layer)          the strict layer-rule checker
-        library(causal_core)    the Causalontology 2.0.0 identity/kind/semantics engine
+        library(causal_core)    the Causalontology 3.0.0 identity/kind/semantics engine
         library(signing)        the pure-Prolog Ed25519 signing layer
         tests/causalontology_conformance   the schema interpreter and vectors
 
@@ -124,7 +124,7 @@ Inside the loop pack the three region sections share no interface at all with on
 
 THE STRUCTURE RECORDS (the causal_map pack)
 
-causal_map mints one record of every Causalontology kind the cut touches, and validates each against the platform's unmodified 2.0.0 engine.
+causal_map mints one record of every Causalontology kind the cut touches, and validates each against the platform's unmodified 3.0.0 engine.
 
 The twenty-eight records span these kinds: strata (the neuroendocrine ladder ordinals), continuants (cortex, striatum, thalamus, substantia nigra), occurrents (the events and processes the loop and the hormone realise), a realizable (the striatum's plasticity disposition), ports (the corticostriatal and dopaminergic ports), a bridge, a transmissive conduit (the nigrostriatal dopamine projection), a computational conduit (the corticostriatal projection), a plain CRO (the corticostriatal transform), a skipping CRO (cortisol crossing ten strata with skips true), a token (one cortisol episode), and a signed assertion (Ed25519 provenance over the skipping CRO).
 
