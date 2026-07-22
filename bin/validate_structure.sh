@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# validate_structure.sh — validate the arm's Causalontology 2.0.0 structure records.
+# validate_structure.sh — validate the arm's Causalontology 3.0.0 structure records.
 #
 # The loops arm keeps ALL structure in one causal_map pack (reused verbatim from
 # the slice), cleanly separate from the runtime loop pack. So — like the slice,
@@ -24,7 +24,7 @@ fi
 # Start the library path with every arm pack's prolog directory.
 LIB=""
 for d in packs/*/prolog; do LIB="$LIB -p library=$d"; done
-# Add PrologAI's causal_core engine pack (the 2.0.0 vocabulary).
+# Add PrologAI's causal_core engine pack (the 3.0.0 vocabulary).
 LIB="$LIB -p library=$PROLOGAI_HOME/packs/causal_core/prolog"
 # Add the conformance harness directory so library(schema_check|signing|ed25519) resolve.
 LIB="$LIB -p library=$HARNESS"

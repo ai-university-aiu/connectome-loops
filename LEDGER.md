@@ -4,7 +4,7 @@
 Wave 3 granularity experiment (see `WAVE_3_DESIGN_v1.txt`). It re-decomposes the
 Wave 2 slice under one rule — **one pack per reentrant loop or circuit**, with
 the regions as INTERNAL modules of the loop pack — holding the behaviour, the
-twenty-eight Causalontology 2.0.0 records, the dynamics, and the closure
+twenty-eight Causalontology 3.0.0 records, the dynamics, and the closure
 mechanism constant. Every entry below is a wall the arm hit while carving the
 identical anatomy coarsely.
 

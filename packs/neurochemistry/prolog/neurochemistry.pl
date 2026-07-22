@@ -1,6 +1,6 @@
 /*  connectome-loops (Wave 3b, the loops arm) — neurochemistry (Layer 1): the NATIVE DYNAMICS, reused verbatim from the Wave 2 slice.
 
-    The GROUNDING RULE says: ground the STRUCTURE in Causalontology 2.0.0, but
+    The GROUNDING RULE says: ground the STRUCTURE in Causalontology 3.0.0, but
     keep the DYNAMICS native. This pack is the dynamics. None of it is a
     causal_relation_object or any other Causalontology record: a rate constant,
     a reward-prediction-error, and a plasticity increment are numbers evolving

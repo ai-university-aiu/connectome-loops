@@ -1,9 +1,9 @@
-/*  connectome-loops (Wave 3b, the loops arm) — the Causalontology 2.0.0 structure validator, reused verbatim from the Wave 2 slice.
+/*  connectome-loops (Wave 3b, the loops arm) — the Causalontology 3.0.0 structure validator, reused verbatim from the Wave 2 slice.
 
     Loads the slice's minted structure records (causal_map) and validates every
-    one against PrologAI's UNMODIFIED Causalontology 2.0.0 conformance engine:
+    one against PrologAI's UNMODIFIED Causalontology 3.0.0 conformance engine:
       - co_validate_schema/4  — the record satisfies its kind's JSON schema
-        (whole-word schemes, the seventeen kinds, additionalProperties:false).
+        (whole-word schemes, the eighteen kinds, additionalProperties:false).
       - causal_core_validate_semantics/3 — the local semantic rules hold.
       - the cortisol CRO classifies as SKIPPING with NO skip-gap (skips:true, so
         the absence of a mechanism is a POSITIVE FINDING, not a gap).
@@ -28,7 +28,7 @@
 % -- validate_structure_main/0: run every check, write artifacts, and halt with the verdict.
 validate_structure_main :-
     % Print the banner.
-    format("~n== connectome-proto-agi :: Causalontology 2.0.0 structure validation ==~n~n", []),
+    format("~n== connectome-proto-agi :: Causalontology 3.0.0 structure validation ==~n~n", []),
     % Fetch the full labelled record list the slice mints.
     causal_map_records(Records),
     % Schema- and semantics-validate every record, collecting failures.
@@ -45,7 +45,7 @@ validate_structure_main :-
     ( SchemaFails == [], SkipOk == ok, SignOk == ok
     % Everything passed: announce success and exit 0.
     ->  length(Records, N),
-        format("~nVALIDATION: PASS -- ~w records valid against Causalontology 2.0.0; skip finding and signature verified.~n~n", [N]),
+        format("~nVALIDATION: PASS -- ~w records valid against Causalontology 3.0.0; skip finding and signature verified.~n~n", [N]),
         halt(0)
     % Something failed: announce and exit 1.
     ;   format("~nVALIDATION: FAIL~n", []),

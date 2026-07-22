@@ -80,7 +80,7 @@ RUN FOUR - VALIDATE THE STRUCTURE
 
 Command: bin/validate_structure.sh
 
-What it shows: all twenty-eight Causalontology 2.0.0 records validated against the platform's unmodified conformance engine, the cortisol CRO classified as skipping with no gap, and the Ed25519 provenance signature verified.
+What it shows: all twenty-eight Causalontology 3.0.0 records validated against the platform's unmodified conformance engine, the cortisol CRO classified as skipping with no gap, and the Ed25519 provenance signature verified.
 
 What it writes: each record to structure/<name>.json, so a viewer can open and inspect a content-addressed record whose identity is the hash of its content.
 
